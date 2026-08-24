@@ -1,0 +1,7 @@
+name: FMS CI/CD
+
+on:
+  push:
+    branches:
+      - project-setup
+

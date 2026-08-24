@@ -19,6 +19,9 @@ async def connect_database():
     print(f"Connecting to database")
     db.client = AsyncIOMotorClient(Mongodb_url)
     db.database = db.client[database_name]
+
+    await db.client.admin.command("ping")
+
     print(f"connected to database")
    
 
@@ -26,8 +29,9 @@ def get_db_connection():
     return db.database
 
 
-async def close_db_connection():
+def close_db_connection():
     db.client.close()
+    print("Mongodb connection closed")
 
 
 
