@@ -5,3 +5,14 @@ on:
     branches:
       - project-setup
 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Say hello
+        run: echo "Github Action is working"
+
