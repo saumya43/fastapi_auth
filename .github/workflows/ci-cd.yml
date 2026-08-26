@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build docker image
-        run: docker build -t fms-auth:test .
+        run: docker build -t fms-auth:${{ github.sha }} .
 
 
 
