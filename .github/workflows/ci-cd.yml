@@ -39,15 +39,13 @@ jobs:
           docker build -t fms-auth:${{ github.sha }} .
           docker build -t fms-auth:latest .
 
-
-
       - name: Run Docker container
         run: |
           docker run -d \
             --name fms-auth-test \
             -p 8000:8000 \
-            -e MONGODB_URL="${{ secrets.DATABASE_URL }}" \
-            -e DATABASE_NAME = "${{ secrets.DATABASE_NAME }}" \
+            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            -e DATABASE_NAME="${{ secrets.DATABASE_NAME }}" \
             fms-auth:${{ github.sha }}
 
       - name: Check container
