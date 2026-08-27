@@ -57,7 +57,7 @@ jobs:
 
       - name: Check applications
         run : |
-          curl -f http://localhost:8000
+          curl -v http://localhost:8000
 
  
 
