@@ -29,16 +29,17 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      IMAGE_TAG: ${{ github.sha }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: start application
-        env: 
-          DATABASE_URL: "${{ secrets.DATABASE_URL }}" 
-          DATABASE_NAME: "${{ secrets.DATABASE_NAME }}" 
-          IMAGE_TAG: ${{ github.sha }}    
+      - name: start application   
         run:  |
           docker compose up -d
 
