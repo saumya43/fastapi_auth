@@ -1,6 +1,7 @@
 services:
     api:
         build: .
+        image: fms-auth:${IMAGE_TAG}
         container_name: fms-api
         ports:
             - "8000:8000"

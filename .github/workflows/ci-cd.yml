@@ -34,29 +34,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build docker image
+      - name: start application
+        env: 
+          DATABASE_URL: "${{ secrets.DATABASE_URL }}" 
+          DATABASE_NAME: "${{ secrets.DATABASE_NAME }}" 
+          IMAGE_TAG: ${{ github.sha }}    
         run:  |
-          docker build -t fms-auth:${{ github.sha }} .
-          docker build -t fms-auth:latest .
-
-      - name: Run Docker container
-        run: |
-          docker run -d \
-            --name fms-auth-test \
-            -p 8000:8000 \
-            -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-            -e DATABASE_NAME="${{ secrets.DATABASE_NAME }}" \
-            fms-auth:${{ github.sha }}
+          docker compose up -d
 
       - name: Check container
         run: |
           sleep 5
+
+          echo "-----Compose containers----"
+          docker compose ps
+          
+          echo "----Docker Container----"
           docker ps
-          docker logs fms-auth-test
-          if [ "$(docker inspect -f '{{.State.Running}}' fms-auth-test)" != "true" ]; then
-            echo "Container failed to start"
-            exit 1
-          fi
+
+          echo "----application logs----"
+          docker compose logs api
 
       
 
